@@ -1,0 +1,20 @@
+concept_id,concept_name,vocabulary_id,domain_id
+313217,Atrial fibrillation,SNOMED,Condition
+605092,Paroxysmal atrial fibrillation with rapid ventricular response,SNOMED,Condition
+1340258,Exacerbation of atrial fibrillation,OMOP Extension,Condition
+4117112,Controlled atrial fibrillation,SNOMED,Condition
+4119601,Lone atrial fibrillation,SNOMED,Condition
+4119602,Non-rheumatic atrial fibrillation,SNOMED,Condition
+4141360,Chronic atrial fibrillation,SNOMED,Condition
+4154290,Paroxysmal atrial fibrillation,SNOMED,Condition
+4199501,Rapid atrial fibrillation,SNOMED,Condition
+4232691,Permanent atrial fibrillation,SNOMED,Condition
+4232697,Persistent atrial fibrillation,SNOMED,Condition
+37170582,Permanent atrial fibrillation due to heart valve disorder,SNOMED,Condition
+37171038,Atrial fibrillation due to heart valve disorder,SNOMED,Condition
+37172212,Paroxysmal atrial fibrillation due to heart valve disorder,SNOMED,Condition
+37172244,Persistent atrial fibrillation due to heart valve disorder,SNOMED,Condition
+37395821,Familial atrial fibrillation,SNOMED,Condition
+42539346,Preexcited atrial fibrillation,SNOMED,Condition
+44782442,Atrial fibrillation with rapid ventricular response,SNOMED,Condition
+45768480,Longstanding persistent atrial fibrillation,SNOMED,Condition
