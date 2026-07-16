@@ -59,14 +59,6 @@ https://rstudio.[xxx].sslip.io/
 ```
 
 팀별로 배부된 계정으로 로그인합니다.
-
-### JupyterHub
-
-```text
-https://jupyter.[xxx].sslip.io/
-```
-
-팀별로 배부된 계정으로 로그인합니다.
 각 서버의 전체 주소는 채널에서 확인하실 수 있습니다.
 
 ---
