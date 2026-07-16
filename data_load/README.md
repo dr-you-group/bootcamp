@@ -21,14 +21,17 @@ tb_cohort.csv 저장 ----------------------> 흉부 X선 이미지 렌더
 | 시간 | 활동 | 파일 | 환경 |
 |------|------|------|------|
 | 12:30-12:40 | CDM 연결 | `01_connect_cdm.R` | RStudio |
-| 12:40-12:50 | 결핵 코호트 구성 | `02_build_tb_cohort.R` | RStudio |
+| 12:40-12:50 | 결핵 코호트 구성 | `02_build_tb_cohort.R` (+ `tb_concepts.csv`) | RStudio |
 | 12:50-13:00 | CXR 이미지 로드 | `03_load_cxr_images.ipynb` | Jupyter |
+
+> `tb_concepts.csv` = ATLAS 에서 확정한 결핵 concept 목록(280개, SNOMED). `02` 가 이 목록을 그대로 쓴다.
 
 ## 실행 순서
 1. **RStudio**에서 `01` → `02` 를 순서대로 실행.
    - `01`: `DatabaseConnector` 로 CDM DB(PostgreSQL)에 접속하는 것이 곧 CDM 연결임을 확인한다.
      실제 병원 CDM 도 이렇게 DB 안에 있다.
-   - `02`: `condition_occurrence` 로 결핵 환자를 판정하고,
+   - `02`: **ATLAS 에서 확정한 결핵 concept 목록(`tb_concepts.csv`)** 으로
+     `condition_occurrence` 에서 결핵 환자를 판정하고,
      `image_occurrence` 에서 그 환자들의 CXR `local_path` 를 붙여
      `outputs/tb_cohort.csv` (subject_id, study_id, local_path) 를 만든다.
      `person_id` 는 int64 라 R 로 꺼내면 정밀도가 깨진다. 조인은 전부 SQL 안에서 끝낸다.
@@ -41,6 +44,9 @@ tb_cohort.csv 저장 ----------------------> 흉부 X선 이미지 렌더
 - 그중 CXR 보유: 76명 / 857장
 
 ## 설계 원칙
+- concept 정의는 **ATLAS(OHDSI)** 로 한다: 'Tuberculosis'(SNOMED 434557) 검색 →
+  concept set 에 include-descendants 로 resolve → `tb_concepts.csv` 로 내보내 `02` 에서 그대로 사용
+  (R 에서 `concept_ancestor` 로 다시 펼치지 않는다).
 - 진단은 오직 `condition_occurrence`(CDM)로만 판정한다.
 - CXR 원본 DICOM 은 GCS 버킷에 있다. 노트북은 코호트에서 몇 장만 골라 내려받아
   렌더링한다(시연용).

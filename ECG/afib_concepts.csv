@@ -1,7 +1,6 @@
 concept_id,concept_name,vocabulary_id,domain_id
 313217,Atrial fibrillation,SNOMED,Condition
 605092,Paroxysmal atrial fibrillation with rapid ventricular response,SNOMED,Condition
-1340258,Exacerbation of atrial fibrillation,OMOP Extension,Condition
 4117112,Controlled atrial fibrillation,SNOMED,Condition
 4119601,Lone atrial fibrillation,SNOMED,Condition
 4119602,Non-rheumatic atrial fibrillation,SNOMED,Condition
