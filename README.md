@@ -47,7 +47,7 @@ https://scrap.yuhs.ac
 ### OHDSI ATLAS
 
 ```text
-https://atlas.34.158.208.140.sslip.io/atlas
+https://atlas.[xxx].sslip.io/atlas
 ```
 
 팀별로 배부된 계정으로 로그인합니다.
@@ -55,7 +55,7 @@ https://atlas.34.158.208.140.sslip.io/atlas
 ### RStudio Server
 
 ```text
-https://rstudio.34.158.208.140.sslip.io/
+https://rstudio.[xxx].sslip.io/
 ```
 
 팀별로 배부된 계정으로 로그인합니다.
@@ -63,10 +63,11 @@ https://rstudio.34.158.208.140.sslip.io/
 ### JupyterHub
 
 ```text
-https://jupyter.34.158.208.140.sslip.io/
+https://jupyter.[xxx].sslip.io/
 ```
 
 팀별로 배부된 계정으로 로그인합니다.
+각 서버의 전체 주소는 채널에서 확인하실 수 있습니다.
 
 ---
 
