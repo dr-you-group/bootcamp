@@ -63,10 +63,13 @@ cohort_raw <- querySql(conn, sprintf(
      SELECT DISTINCT co.person_id
        FROM %1$s.condition_occurrence co
       WHERE co.condition_concept_id IN (%2$s))
-   SELECT io.person_id, io.image_occurrence_id, io.local_path
+   SELECT CAST(io.person_id           AS VARCHAR) AS person_id,
+          CAST(io.image_occurrence_id AS VARCHAR) AS image_occurrence_id,
+          io.local_path
      FROM %1$s.image_occurrence io
      JOIN tb_person tp ON io.person_id = tp.person_id
-    WHERE io.modality_concept_id IN (%3$s)", CDM_SCHEMA, id_list, cxr_id_list)) %>%
+    WHERE io.modality_concept_id IN (%3$s)
+    ORDER BY io.person_id, io.image_occurrence_id", CDM_SCHEMA, id_list, cxr_id_list)) %>%
   lower_names()
 
 if (nrow(cohort_raw) == 0) {
@@ -75,13 +78,10 @@ if (nrow(cohort_raw) == 0) {
 }
 
 # --- 4. 컬럼 정리 (CDM 네이티브 키) ----------------------------------
-# person_id / image_occurrence_id
+# person_id / image_occurrence_id 는 bigint 라 SQL 에서 VARCHAR 로 캐스팅해
+# 가져왔다 (R numeric 정밀도 손실 방지). 정렬도 DB(ORDER BY)에서 끝냈으므로
+# 여기선 컬럼 순서만 맞춘다.
 cohort <- cohort_raw %>%
-  arrange(person_id, image_occurrence_id) %>%
-  mutate(
-    person_id           = as.character(person_id),
-    image_occurrence_id = as.character(image_occurrence_id)
-  ) %>%
   select(person_id, image_occurrence_id, local_path)
 
 cat("[3] CXR 를 가진 결핵 환자:",
