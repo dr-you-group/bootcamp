@@ -44,6 +44,11 @@ https://scrap.yuhs.ac
 - 팀 ID
 - 팀 비밀번호
 
+```
+개인용 Colab 실습을 위한 데이터셋은 아래 링크를 통해 다운받으실 수 있습니다. (당일 개방 예정)
+https://drive.google.com/drive/folders/1EUpzMBmxcxHB_KwhBBsrJEKQeugv_6Mm?usp=drive_link
+```
+
 ### OHDSI ATLAS
 
 ```text
