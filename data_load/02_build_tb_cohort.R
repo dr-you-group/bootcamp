@@ -19,11 +19,27 @@ ensure <- function(pkg) {
 }
 for (p in c("DatabaseConnector", "dplyr")) ensure(p)
 
-# 01_connect_cdm.R 선행 실행으로 conn / CDM_SCHEMA 준비
-if (!exists("conn")) source("01_connect_cdm.R")
+# --- 이 스크립트가 있는 폴더 찾기 (getwd() 아님) ---------------------
+# CSV 를 코드 파일과 같은 폴더에 만들기 위함.
+# RStudio: Source 실행(sys.frame$ofile) / 줄단위 실행(rstudioapi) 모두 대응.
+get_script_dir <- function() {
+  for (i in seq_len(sys.nframe())) {                 # 1) source() 실행
+    of <- sys.frame(i)$ofile
+    if (!is.null(of)) return(dirname(normalizePath(of)))
+  }
+  fa <- grep("^--file=", commandArgs(FALSE), value = TRUE)  # 2) Rscript --file=
+  if (length(fa)) return(dirname(normalizePath(sub("^--file=", "", fa[1]))))
+  if (requireNamespace("rstudioapi", quietly = TRUE) &&      # 3) RStudio 줄단위 실행
+      rstudioapi::isAvailable()) {
+    p <- rstudioapi::getSourceEditorContext()$path
+    if (nzchar(p)) return(dirname(normalizePath(p)))
+  }
+  getwd()                                            # 4) 폴백
+}
+SCRIPT_DIR <- get_script_dir()
 
-OUT_DIR <- file.path(getwd(), "outputs")
-dir.create(OUT_DIR, showWarnings = FALSE, recursive = TRUE)
+# 01_connect_cdm.R 선행 실행으로 conn / CDM_SCHEMA 준비 (같은 폴더 기준)
+if (!exists("conn")) source(file.path(SCRIPT_DIR, "01_connect_cdm.R"))
 
 lower_names <- function(df) { names(df) <- tolower(names(df)); df }
 
@@ -88,8 +104,8 @@ cat("[3] CXR 를 가진 결핵 환자:",
     length(unique(cohort$person_id)), "명 /",
     nrow(cohort), "장(CXR 인스턴스)\n")
 
-# --- 5. 파일 저장 --------------------------------------------
-out_csv <- file.path(OUT_DIR, "tb_cohort.csv")
+# --- 5. 파일 저장 (코드 파일과 같은 폴더) ----------------------------
+out_csv <- file.path(SCRIPT_DIR, "tb_cohort.csv")
 write.csv(cohort, out_csv, row.names = FALSE)
 
 cat("\n[완료] 코호트 저장 =>", out_csv, "\n")
