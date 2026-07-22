@@ -47,7 +47,8 @@ cat("\n[연결 확인]\n")
 cat("\nperson 테이블 미리보기 (5행):\n")
 querySql(conn, sprintf(
   "SELECT CAST(person_id AS VARCHAR) AS person_id,
-          person_source_value, year_of_birth, gender_source_value
+          person_source_value, year_of_birth,
+          gender_concept_id, gender_source_value
      FROM %s.person LIMIT 5", CDM_SCHEMA)) %>%
   print()
 
